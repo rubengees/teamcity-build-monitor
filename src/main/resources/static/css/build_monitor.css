@@ -1,0 +1,35 @@
+html, body, .viewport {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.build-item {
+    flex-grow: 1;
+    min-width: 49vw;
+    margin: 0.5vw;
+    color: white;
+    font-size: 150%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.build-item-success {
+    background: green;
+}
+
+.build-item-failure {
+    background: red;
+}
+
+.build-item-unknown {
+    background: lightgrey;
+}

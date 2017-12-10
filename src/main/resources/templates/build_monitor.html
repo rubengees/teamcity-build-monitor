@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Teamcity Build Monitor</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="../static/css/build_monitor.css" th:href="@{/css/build_monitor.css}"/>
+</head>
+<body>
+<script th:inline="javascript">
+    var PORT = [[${port}]];
+    var INTERVAL = [[${interval}]];
+</script>
+<script src="../static/js/build_monitor.js" th:src="@{/js/build_monitor.js}"></script>
+</body>
+</html>
