@@ -2,6 +2,8 @@ buildscript {
     ext {
         kotlinVersion = '1.2.0'
         springBootVersion = '1.5.9.RELEASE'
+        teamcityRestClientVersion = '0.1.82'
+        caffeineVersion = '2.6.0'
         kluentVersion = '1.30'
     }
 
@@ -35,20 +37,25 @@ compileTestKotlin {
 
 repositories {
     jcenter()
+    maven { url "https://dl.bintray.com/jetbrains/teamcity-rest-client" }
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}"
-    compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile "org.springframework.boot:spring-boot-starter-data-rest"
+    compile "org.springframework.boot:spring-boot-starter-cache"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-actuator"
     compile "org.springframework.boot:spring-boot-devtools"
 
+    compile "org.jetbrains.teamcity:teamcity-rest-client:$teamcityRestClientVersion"
+    compile "com.github.ben-manes.caffeine:caffeine:$caffeineVersion"
+
     testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "org.amshove.kluent:kluent:${kluentVersion}"
+    testCompile "org.amshove.kluent:kluent:$kluentVersion"
 }
 
 task wrapper(type: Wrapper) {

@@ -76,4 +76,4 @@ gradle-app.setting
 
 ### Project-specific
 # Private properties
-build-monitor.properties
+build.monitor.properties

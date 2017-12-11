@@ -1,4 +1,0 @@
-teamcity.url=https://teamcity.example.de
-teamcity.username=user
-teamcity.password=pass
-teamcity.interval=5000

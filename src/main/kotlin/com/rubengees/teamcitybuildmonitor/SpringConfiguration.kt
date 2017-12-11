@@ -1,11 +1,13 @@
 package com.rubengees.teamcitybuildmonitor
 
-import org.springframework.boot.web.client.RestTemplateBuilder
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.github.benmanes.caffeine.cache.Ticker
+import org.jetbrains.teamcity.rest.TeamCityInstanceFactory
+import org.springframework.cache.caffeine.CaffeineCache
+import org.springframework.cache.support.SimpleCacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.MediaType
-import org.springframework.http.client.ClientHttpRequestInterceptor
-import org.springframework.web.client.RestTemplate
+import java.util.concurrent.TimeUnit
 
 /**
  * @author Ruben Gees
@@ -14,12 +16,16 @@ import org.springframework.web.client.RestTemplate
 class SpringConfiguration(val config: ConfigProperties) {
 
     @Bean(name = ["teamcityClient"])
-    fun getTeamcityClient(): RestTemplate = RestTemplateBuilder()
-            .basicAuthorization(config.username, config.password)
-            .interceptors(ClientHttpRequestInterceptor { request, body, execution ->
-                request.headers.accept = listOf(MediaType.APPLICATION_JSON)
+    fun teamcityClient() = TeamCityInstanceFactory.httpAuth(config.url, config.username, config.password)
 
-                execution.execute(request, body)
-            })
-            .build()
+    @Bean
+    fun cacheManager(ticker: Ticker) = SimpleCacheManager().apply {
+        setCaches(listOf(CaffeineCache("teamcity", Caffeine.newBuilder()
+                .expireAfterWrite(config.interval, TimeUnit.MILLISECONDS)
+                .ticker(ticker)
+                .build())))
+    }
+
+    @Bean
+    fun ticker() = Ticker.systemTicker()
 }

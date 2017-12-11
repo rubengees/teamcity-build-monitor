@@ -1,11 +1,9 @@
 package com.rubengees.teamcitybuildmonitor
 
 import org.hibernate.validator.constraints.NotBlank
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 import org.springframework.validation.annotation.Validated
-import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
 /**

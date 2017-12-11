@@ -1,7 +1,6 @@
 package com.rubengees.teamcitybuildmonitor.controller
 
-import com.rubengees.teamcitybuildmonitor.ConfigProperties
-import org.springframework.boot.context.embedded.LocalServerPort
+import org.springframework.core.env.Environment
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
@@ -10,15 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping
  * @author Ruben Gees
  */
 @Controller
-class ViewController(private val config: ConfigProperties) {
+class ViewController(val environment: Environment) {
 
-//    @LocalServerPort
-//    private lateinit var port: String
+    private val port by lazy { environment.getProperty("local.server.port") }
 
     @RequestMapping("/buildMonitor")
     fun getBuildMonitor(model: Model): String {
-        model.addAttribute("port", 8080)
-        model.addAttribute("interval", config.interval)
+        model.addAttribute("port", port)
 
         return "build_monitor"
     }
