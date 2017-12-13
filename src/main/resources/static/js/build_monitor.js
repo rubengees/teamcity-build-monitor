@@ -43,6 +43,8 @@ function pollTeamcityStatus() {
 }
 
 function clearLayout() {
+    timeago.cancel();
+
     while (mainContainer.firstChild) {
         mainContainer.removeChild(mainContainer.firstChild);
     }
@@ -86,6 +88,16 @@ function constructBuildItem(projectState) {
         buildNumberContainer.textContent += "#" + projectState.buildNumber;
 
         container.appendChild(buildNumberContainer);
+    }
+
+    if (projectState.dateTime) {
+        var timeContainer = document.createElement("div");
+
+        timeContainer.classList.add("absolute-bottom-right");
+        timeContainer.setAttribute("datetime", projectState.dateTime);
+        timeago().render(timeContainer);
+
+        container.appendChild(timeContainer);
     }
 
     return container;

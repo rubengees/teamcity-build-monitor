@@ -12,6 +12,7 @@ data class ApiResponse(@JsonProperty("projectStates") val projectStates: List<Pr
             @JsonProperty("name") val name: String,
             @JsonProperty("status") val status: BuildStatus?,
             @JsonProperty("branchName") val branchName: String?,
-            @JsonProperty("buildNumber") val buildNumber: String?
+            @JsonProperty("buildNumber") val buildNumber: String?,
+            @JsonProperty("dateTime") val dateTime: String
     )
 }
