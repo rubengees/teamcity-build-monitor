@@ -1,34 +1,41 @@
 var mainContainer = document.getElementById("main");
-var lastStates = {};
+var lastData = "";
 
 pollTeamcityStatus();
 
 function pollTeamcityStatus() {
     fetch("http://localhost:" + PORT + "/teamcityStatus")
         .then(function (response) {
-            return response.json();
+            return response.text();
         })
         .then(function (data) {
-            if (JSON.stringify(data) !== JSON.stringify(lastStates)) {
-                lastStates = data;
+            if (data !== lastData) {
+                lastData = data;
+
+                return JSON.parse(data);
             } else {
-                return;
+                return null;
             }
+        })
+        .then(function (data) {
+            if (data) {
+                clearLayout();
 
-            clearLayout();
+                data.projectStates.forEach(function (projectState) {
+                    var buildItem = constructBuildItem(projectState);
 
-            data.projectStates.forEach(function (projectState) {
-                var buildItem = constructBuildItem(projectState);
-
-                mainContainer.appendChild(buildItem);
-            })
+                    mainContainer.appendChild(buildItem);
+                })
+            }
         })
         .catch(function (reason) {
-            clearLayout();
+            if (reason) {
+                clearLayout();
 
-            var container = constructErrorLayout(reason);
+                var container = constructErrorLayout(reason);
 
-            mainContainer.appendChild(container);
+                mainContainer.appendChild(container);
+            }
         })
         .finally(function () {
             setTimeout(pollTeamcityStatus, 5000);
@@ -49,8 +56,7 @@ function constructBuildItem(projectState) {
     centerContainer.style.margin = "auto";
     centerContainer.classList.add("flex-center");
 
-    nameContainer.style.fontSize = "150%";
-    nameContainer.style.fontWeight = "bold";
+    nameContainer.classList.add("big-text");
     nameContainer.textContent += projectState.name;
 
     container.classList.add("flex-center", "build-item", "card");
@@ -76,10 +82,7 @@ function constructBuildItem(projectState) {
     if (projectState.buildNumber) {
         var buildNumberContainer = document.createElement("div");
 
-        buildNumberContainer.style.position = "absolute";
-        buildNumberContainer.style.left = "0";
-        buildNumberContainer.style.bottom = "0";
-        buildNumberContainer.style.margin = "4px";
+        buildNumberContainer.classList.add("absolute-bottom-left");
         buildNumberContainer.textContent += "#" + projectState.buildNumber;
 
         container.appendChild(buildNumberContainer);
