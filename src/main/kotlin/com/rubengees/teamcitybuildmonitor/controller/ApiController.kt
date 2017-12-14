@@ -23,13 +23,14 @@ class ApiController(private val repository: TeamcityRepository) {
             .flatMap { repository.getBuildConfigurations(it) }
             .map { it to repository.getLastBuild(it) }
             .map { (buildConfig, build) ->
+                val id = buildConfig.id.stringId
                 val name = buildConfig.name
                 val status = build?.status
                 val branchName = build?.branch?.name?.replace("refs/heads/", "")
                 val buildNumber = build?.buildNumber
                 val dateTime = build?.fetchFinishDate()
 
-                ProjectState(name, status, branchName, buildNumber, dateFormat.format(dateTime))
+                ProjectState(id, name, status, branchName, buildNumber, dateFormat.format(dateTime))
             }
     )
 }

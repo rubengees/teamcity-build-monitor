@@ -53,16 +53,18 @@ function clearLayout() {
 function constructBuildItem(projectState) {
     var container = document.createElement("div");
     var centerContainer = document.createElement("div");
-    var nameContainer = document.createElement("div");
+    var nameContainer = document.createElement("a");
 
     centerContainer.style.margin = "auto";
     centerContainer.classList.add("flex-center");
 
+    nameContainer.href = TEAMCITY_URL + "/viewType.html?buildTypeId=" + projectState.id;
     nameContainer.classList.add("big-text");
     nameContainer.textContent += projectState.name;
 
-    container.classList.add("flex-center", "build-item", "card");
     centerContainer.appendChild(nameContainer);
+
+    container.classList.add("flex-center", "build-item", "card");
     container.appendChild(centerContainer);
 
     if (projectState.status === 'SUCCESS') {

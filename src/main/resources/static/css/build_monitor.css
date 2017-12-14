@@ -10,6 +10,15 @@ body {
     flex-wrap: wrap;
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 .card {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;

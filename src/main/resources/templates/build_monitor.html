@@ -11,6 +11,7 @@
 <body>
 <div id="main" class="main"></div>
 <script th:inline="javascript">
+    var TEAMCITY_URL = [[${teamcityUrl}]];
     var PORT = [[${port}]];
 </script>
 <script src="/webjars/timeago.js/3.0.0/dist/timeago.min.js"></script>
