@@ -31,7 +31,7 @@ class ApiControllerTest {
 
     @Test
     fun getTeamcityStatus() {
-        val result = subject.getTeamcityStatus()
+        val result = subject.teamcityStatus()
 
         result.projectStates.shouldBeEmpty()
     }

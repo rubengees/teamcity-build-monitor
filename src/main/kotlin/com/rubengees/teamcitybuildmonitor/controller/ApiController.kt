@@ -4,6 +4,7 @@ import com.rubengees.teamcitybuildmonitor.domain.ApiResponse
 import com.rubengees.teamcitybuildmonitor.domain.ApiResponse.ProjectState
 import com.rubengees.teamcitybuildmonitor.repository.TeamcityRepository
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod.GET
 import org.springframework.web.bind.annotation.RestController
 import java.text.SimpleDateFormat
 import java.util.TimeZone
@@ -18,8 +19,8 @@ class ApiController(private val repository: TeamcityRepository) {
         timeZone = TimeZone.getTimeZone("UTC")
     }
 
-    @RequestMapping("/teamcityStatus")
-    fun getTeamcityStatus() = ApiResponse(repository.getProjects()
+    @RequestMapping("/teamcityStatus", method = [GET])
+    fun teamcityStatus() = ApiResponse(repository.getProjects()
             .flatMap { repository.getBuildConfigurations(it) }
             .map { it to repository.getLastBuild(it) }
             .map { (buildConfig, build) ->
