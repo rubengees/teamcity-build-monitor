@@ -12,7 +12,13 @@ function pollTeamcityStatus() {
             if (data !== lastData) {
                 lastData = data;
 
-                return JSON.parse(data);
+                var parsedData = JSON.parse(data);
+
+                if (parsedData.error) {
+                    throw parsedData;
+                } else {
+                    return parsedData;
+                }
             } else {
                 return null;
             }
@@ -30,6 +36,10 @@ function pollTeamcityStatus() {
         })
         .catch(function (reason) {
             if (reason) {
+                if (reason.error && reason.exception) {
+                    reason.message = reason.error + "<br/>" + reason.exception + "<br/>" + reason.message
+                }
+
                 clearLayout();
 
                 var container = constructErrorLayout(reason);
@@ -107,8 +117,8 @@ function constructBuildItem(projectState) {
 
 function constructErrorLayout(reason) {
     var container = document.createElement("div");
-    var text = document.createTextNode(reason.message);
 
-    container.appendChild(text);
+    container.innerHTML = reason.message;
+
     return container;
 }
