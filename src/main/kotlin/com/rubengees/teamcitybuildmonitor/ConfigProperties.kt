@@ -17,11 +17,9 @@ class ConfigProperties {
     @NotBlank
     lateinit var url: String
 
-    @NotBlank
-    lateinit var username: String
+    var username: String? = null
 
-    @NotBlank
-    lateinit var password: String
+    var password: String? = null
 
     @Min(5000)
     var interval = 0L
