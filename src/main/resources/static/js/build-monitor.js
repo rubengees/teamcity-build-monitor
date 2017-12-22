@@ -4,7 +4,7 @@ var lastData = "";
 pollTeamcityStatus();
 
 function pollTeamcityStatus() {
-    fetch("http://localhost:" + PORT + "/teamcityStatus")
+    fetch("/teamcityStatus")
         .then(function (response) {
             return response.text();
         })
