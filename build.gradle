@@ -31,7 +31,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'com.github.ben-manes.versions'
 
 group = 'com.rubengees'
-version = '1.0.0'
+version = '1.0.1'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 
