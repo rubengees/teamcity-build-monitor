@@ -59,8 +59,9 @@ dependencies {
 
     compile "org.jetbrains.teamcity:teamcity-rest-client:$teamcityRestClientVersion"
     compile "com.github.ben-manes.caffeine:caffeine:$caffeineVersion"
-    compile "org.webjars.bower:timeago.js:$timeagoVersion"
+
     compile "org.webjars:jquery:$jQueryVersion"
+    compile "org.webjars.bower:timeago.js:$timeagoVersion"
     compile "org.webjars.npm:roboto-fontface:$robotoVersion"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
