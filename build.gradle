@@ -9,6 +9,7 @@ buildscript {
         caffeineVersion = '2.6.0'
         timeagoVersion = '3.0.0'
         jQueryVersion = '3.2.1'
+        robotoVersion = '0.8.0'
 
         kluentVersion = '1.32'
     }
@@ -60,6 +61,7 @@ dependencies {
     compile "com.github.ben-manes.caffeine:caffeine:$caffeineVersion"
     compile "org.webjars.bower:timeago.js:$timeagoVersion"
     compile "org.webjars:jquery:$jQueryVersion"
+    compile "org.webjars.npm:roboto-fontface:$robotoVersion"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "org.amshove.kluent:kluent:$kluentVersion"
