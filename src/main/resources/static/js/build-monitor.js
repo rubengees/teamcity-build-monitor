@@ -31,6 +31,8 @@ function pollTeamcityStatus() {
                 textStatus = jqxhr.responseJSON.error + "<br/>"
                     + jqxhr.responseJSON.exception + "<br/>"
                     + jqxhr.responseJSON.message
+            } else if (textStatus === 'error') {
+                textStatus = 'Could not establish connection to backend'
             }
 
             clearLayout();
