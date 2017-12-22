@@ -11,7 +11,7 @@ buildscript {
         jQueryVersion = '3.2.1'
         robotoVersion = '0.8.0'
 
-        kluentVersion = '1.32'
+        kluentVersion = '1.33'
     }
 
     repositories {
@@ -32,7 +32,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'com.github.ben-manes.versions'
 
 group = 'com.rubengees'
-version = '1.0.1'
+version = '1.0.2'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -42,7 +42,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 repositories {
     jcenter()
-    mavenCentral()
     maven { url "https://dl.bintray.com/jetbrains/teamcity-rest-client" }
 }
 
