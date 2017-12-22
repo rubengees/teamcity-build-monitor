@@ -8,6 +8,7 @@ buildscript {
         teamcityRestClientVersion = '0.1.82'
         caffeineVersion = '2.6.0'
         timeagoVersion = '3.0.0'
+        jQueryVersion = '3.2.1'
 
         kluentVersion = '1.32'
     }
@@ -58,6 +59,7 @@ dependencies {
     compile "org.jetbrains.teamcity:teamcity-rest-client:$teamcityRestClientVersion"
     compile "com.github.ben-manes.caffeine:caffeine:$caffeineVersion"
     compile "org.webjars.bower:timeago.js:$timeagoVersion"
+    compile "org.webjars:jquery:$jQueryVersion"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "org.amshove.kluent:kluent:$kluentVersion"

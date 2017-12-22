@@ -1,63 +1,52 @@
-var mainContainer = document.getElementById("main");
+var mainContainer = $("#main");
 var lastData = "";
 
 pollTeamcityStatus();
 
 function pollTeamcityStatus() {
-    fetch("/teamcityStatus")
-        .then(function (response) {
-            return response.text();
-        })
-        .then(function (data) {
-            if (data !== lastData) {
-                lastData = data;
+    $.getJSON("/teamcityStatus")
+        .done(function (data) {
+            var dataAsString = JSON.stringify(data);
 
-                var parsedData = JSON.parse(data);
-
-                if (parsedData.error) {
-                    throw parsedData;
-                } else {
-                    return parsedData;
-                }
+            if (dataAsString !== lastData) {
+                lastData = dataAsString;
             } else {
-                return null;
+                return;
             }
-        })
-        .then(function (data) {
-            if (data) {
-                clearLayout();
 
-                data.projectStates.forEach(function (projectState) {
-                    var buildItem = constructBuildItem(projectState);
-
-                    mainContainer.appendChild(buildItem);
-                })
+            if (data.error) {
+                throw data;
             }
+
+            clearLayout();
+
+            data.projectStates.forEach(function (projectState) {
+                var buildItem = constructBuildItem(projectState);
+
+                mainContainer.append(buildItem);
+            })
         })
-        .catch(function (reason) {
-            if (reason) {
-                if (reason.error && reason.exception) {
-                    reason.message = reason.error + "<br/>" + reason.exception + "<br/>" + reason.message
-                }
-
-                clearLayout();
-
-                var container = constructErrorLayout(reason);
-
-                mainContainer.appendChild(container);
+        .fail(function (jqxhr, textStatus) {
+            if (jqxhr.responseJSON) {
+                textStatus = jqxhr.responseJSON.error + "<br/>"
+                    + jqxhr.responseJSON.exception + "<br/>"
+                    + jqxhr.responseJSON.message
             }
+
+            clearLayout();
+
+            var container = constructErrorLayout(textStatus);
+
+            mainContainer.append(container);
         })
-        .finally(function () {
+        .always(function () {
             setTimeout(pollTeamcityStatus, 5000);
         });
 }
 
 function clearLayout() {
     timeago.cancel();
-
-    while (mainContainer.firstChild) {
-        mainContainer.removeChild(mainContainer.firstChild);
-    }
+    mainContainer.empty();
 }
 
 function constructBuildItem(projectState) {
@@ -72,10 +61,10 @@ function constructBuildItem(projectState) {
     nameContainer.classList.add("big-text");
     nameContainer.textContent += projectState.name;
 
-    centerContainer.appendChild(nameContainer);
+    centerContainer.append(nameContainer);
 
     container.classList.add("flex-center", "build-item", "card");
-    container.appendChild(centerContainer);
+    container.append(centerContainer);
 
     if (projectState.status === 'SUCCESS') {
         container.classList.add("build-item-success");
@@ -90,7 +79,7 @@ function constructBuildItem(projectState) {
 
         branchNameContainer.textContent += projectState.branchName;
 
-        centerContainer.appendChild(branchNameContainer);
+        centerContainer.append(branchNameContainer);
     }
 
     if (projectState.buildNumber) {
@@ -99,7 +88,7 @@ function constructBuildItem(projectState) {
         buildNumberContainer.classList.add("absolute-bottom-left");
         buildNumberContainer.textContent += "#" + projectState.buildNumber;
 
-        container.appendChild(buildNumberContainer);
+        container.append(buildNumberContainer);
     }
 
     if (projectState.dateTime) {
@@ -109,16 +98,16 @@ function constructBuildItem(projectState) {
         timeContainer.setAttribute("datetime", projectState.dateTime);
         timeago().render(timeContainer);
 
-        container.appendChild(timeContainer);
+        container.append(timeContainer);
     }
 
     return container;
 }
 
-function constructErrorLayout(reason) {
+function constructErrorLayout(message) {
     var container = document.createElement("div");
 
-    container.innerHTML = reason.message;
+    container.innerHTML = message;
 
     return container;
 }
