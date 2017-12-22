@@ -60,7 +60,7 @@ a:hover {
 .build-item {
     position: relative;
     flex-grow: 1;
-    min-width: 49vw;
+    width: 49vw;
     margin: 0.25vw;
     color: white;
 }
