@@ -5,7 +5,7 @@ The only requirement to run it is a `JVM` >= 8.
 
 ### Setup
 
-You can download the latest `jar` from [here](https://github.com/rubengees/teamcity-build-monitor/releases/download/1.0.0/teamcity-build-monitor.jar).
+You can download the latest `jar` from [here](https://github.com/rubengees/teamcity-build-monitor/releases/download/1.0.2/teamcity-build-monitor.jar).
 
 #### Configuration
 
