@@ -1,4 +1,4 @@
-var mainContainer = $("#main");
+var mainContainer = document.getElementById("main");
 var lastData = "";
 
 pollTeamcityStatus();
@@ -23,7 +23,7 @@ function pollTeamcityStatus() {
             data.projectStates.forEach(function (projectState) {
                 var buildItem = constructBuildItem(projectState);
 
-                mainContainer.append(buildItem);
+                mainContainer.appendChild(buildItem);
             })
         })
         .fail(function (jqxhr, textStatus) {
@@ -39,7 +39,7 @@ function pollTeamcityStatus() {
 
             var container = constructErrorLayout(textStatus);
 
-            mainContainer.append(container);
+            mainContainer.appendChild(container);
         })
         .always(function () {
             setTimeout(pollTeamcityStatus, 5000);
@@ -48,7 +48,10 @@ function pollTeamcityStatus() {
 
 function clearLayout() {
     timeago.cancel();
-    mainContainer.empty();
+
+    while (mainContainer.firstChild) {
+        mainContainer.removeChild(mainContainer.firstChild);
+    }
 }
 
 function constructBuildItem(projectState) {
@@ -63,10 +66,10 @@ function constructBuildItem(projectState) {
     nameContainer.classList.add("big-text");
     nameContainer.textContent += projectState.name;
 
-    centerContainer.append(nameContainer);
+    centerContainer.appendChild(nameContainer);
 
     container.classList.add("flex-center", "build-item", "card");
-    container.append(centerContainer);
+    container.appendChild(centerContainer);
 
     if (projectState.status === 'SUCCESS') {
         container.classList.add("build-item-success");
@@ -81,7 +84,7 @@ function constructBuildItem(projectState) {
 
         branchNameContainer.textContent += projectState.branchName;
 
-        centerContainer.append(branchNameContainer);
+        centerContainer.appendChild(branchNameContainer);
     }
 
     if (projectState.buildNumber) {
@@ -90,7 +93,7 @@ function constructBuildItem(projectState) {
         buildNumberContainer.classList.add("absolute-bottom-left");
         buildNumberContainer.textContent += "#" + projectState.buildNumber;
 
-        container.append(buildNumberContainer);
+        container.appendChild(buildNumberContainer);
     }
 
     if (projectState.dateTime) {
@@ -100,7 +103,7 @@ function constructBuildItem(projectState) {
         timeContainer.setAttribute("datetime", projectState.dateTime);
         timeago().render(timeContainer);
 
-        container.append(timeContainer);
+        container.appendChild(timeContainer);
     }
 
     return container;
