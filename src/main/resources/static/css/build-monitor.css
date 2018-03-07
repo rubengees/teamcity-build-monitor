@@ -6,7 +6,9 @@ html, body, .viewport {
 }
 
 body {
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     font-family: 'Roboto', sans-serif;
 }
@@ -26,8 +28,11 @@ a:hover {
 }
 
 .flex-center {
+    display: -ms-flexbox;
     display: flex;
     flex-direction: column;
+    -ms-flex-direction: column;
+    -ms-flex-pack: center;
     justify-content: center;
     align-items: center;
 }
@@ -55,11 +60,13 @@ a:hover {
     margin: 0.25vw;
     display: inherit;
     flex-wrap: inherit;
+    -ms-flex-wrap: inherit;
 }
 
 .build-item {
     position: relative;
     flex-grow: 1;
+    -ms-flex-grow: 1;
     width: 49vw;
     margin: 0.25vw;
     color: white;

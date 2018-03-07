@@ -68,7 +68,9 @@ function constructBuildItem(projectState) {
 
     centerContainer.appendChild(nameContainer);
 
-    container.classList.add("flex-center", "build-item", "card");
+    container.classList.add("flex-center");
+    container.classList.add("build-item");
+    container.classList.add("card");
     container.appendChild(centerContainer);
 
     if (projectState.status === 'SUCCESS') {
