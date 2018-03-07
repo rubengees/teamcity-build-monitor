@@ -10,6 +10,8 @@ import org.amshove.kluent.shouldBeEmpty
 import org.jetbrains.teamcity.rest.Build
 import org.junit.Before
 import org.junit.Test
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 /**
  * @author Ruben Gees
@@ -24,15 +26,15 @@ class ApiControllerTest {
         repository = mock(TeamcityRepository::class)
         subject = ApiController(repository)
 
-        When calling repository.getProjects() itReturns emptyList()
-        When calling repository.getBuildConfigurations(any()) itReturns emptyList()
-        When calling repository.getLastBuild(any()) itReturns mock(Build::class)
+        When calling repository.getProjects() itReturns Flux.empty()
+        When calling repository.getBuildConfigurations(any()) itReturns Flux.empty()
+        When calling repository.getLastBuild(any()) itReturns Mono.just(mock(Build::class))
     }
 
     @Test
     fun getTeamcityStatus() {
-        val result = subject.teamcityStatus()
+        val result = subject.teamcityStatus().block()
 
-        result.projectStates.shouldBeEmpty()
+        result!!.projectStates.shouldBeEmpty()
     }
 }
