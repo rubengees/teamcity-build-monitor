@@ -20,9 +20,11 @@ class ApiController(private val repository: TeamcityRepository) {
     }
 
     @RequestMapping("/teamcityStatus", method = [GET])
-    fun teamcityStatus() = ApiResponse(repository.getProjects()
+    fun teamcityStatus() = repository.getProjects()
             .flatMap { repository.getBuildConfigurations(it) }
-            .map { it to repository.getLastBuild(it) }
+            .flatMap { buildConfiguration ->
+                repository.getLastBuild(buildConfiguration).map { buildConfiguration to it }
+            }
             .map { (buildConfig, build) ->
                 val id = buildConfig.id.stringId
                 val name = buildConfig.name
@@ -33,5 +35,6 @@ class ApiController(private val repository: TeamcityRepository) {
 
                 ProjectState(id, name, status, branchName, buildNumber, dateFormat.format(dateTime))
             }
-    )
+            .reduce(listOf<ProjectState>(), { current, next -> current + next })
+            .map { ApiResponse(it) }
 }

@@ -12,12 +12,12 @@ You can download the latest `jar` from [here](https://github.com/rubengees/teamc
 Before running, you need to setup some properties.<br>
 Currently supported are:
 
-Name              | Description                                                      | Example
------------------ | ---------------------------------------------------------------- | ---------------------------------------------
-teamcity.url      | The url your teamcity server is reachable under.                 | `teamcity.url=https://teamcity.jetbrains.com`
-teamcity.username | The username of the account you want to login with.              | `teamcity.username=test`
-teamcity.password | The password of the account you want to login with.              | `teamcity.password=test`
-teamcity.interval | The interval you want to refresh with. The default is 5 seconds. | `teamcity.interval=60000` (One minute)
+Name              | Description                                                       | Example
+----------------- | ----------------------------------------------------------------- | ---------------------------------------------
+teamcity.url      | The url your teamcity server is reachable under.                  | `teamcity.url=https://teamcity.jetbrains.com`
+teamcity.username | The username of the account you want to login with.               | `teamcity.username=test`
+teamcity.password | The password of the account you want to login with.               | `teamcity.password=test`
+teamcity.interval | The interval you want to refresh with. The default is 10 seconds. | `teamcity.interval=60000` (One minute)
 
 If you do not specify a valid `username` and/or `password`, guest authentification is assumed. See the [template file](build.monitor.template.properties) to get an idea on how your properties should look like.
 
